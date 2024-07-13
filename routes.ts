@@ -7,7 +7,6 @@ import { products } from '@prisma/client'
 
 export async function Routes() {
     const id = uuidv4();
-
     app.get('/', async (req, res) => {
         const products = await getAllProductsActive()
         res.send(products);

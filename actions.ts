@@ -38,8 +38,6 @@ export async function updateProduct(slug: string, data: products) {
     return 200
 }
 
-
-
 // export async function getAccountFull(data: _Product) {
 //     const account = await prisma.users.findFirst({
 //         where: {
