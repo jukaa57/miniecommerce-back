@@ -74,4 +74,4 @@ export function sendEmailSignUpValidation(email: string, validationCode: string 
     return responseEmail
 }
 
-export const now = new Date().toDateString();
+export const now = new Date();
