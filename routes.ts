@@ -7,12 +7,12 @@ import { products } from '@prisma/client'
 
 export async function Routes() {
     const id = uuidv4();
-    app.get('/', async (req, res) => {
+    app.get('/api/products', async (req, res) => {
         const products = await getAllProductsActive()
         res.send(products);
     });
 
-    app.post('/product/new', async (req, res, next) => {
+    app.post('/api/product/new', async (req, res, next) => {
         const data: products = req.body
         if(!data.name || !data.slug || !data.value) return res.status(500).send('Bad Request \n Informations is required')
 
@@ -28,7 +28,7 @@ export async function Routes() {
         }
     });
     
-    app.put('/product/edit/:slug', async (req, res, next) => {
+    app.put('/api/product/edit/:slug', async (req, res, next) => {
         const productSlug = req.params.slug
 
         if(await updateProduct(productSlug, req.body) === 200) {
