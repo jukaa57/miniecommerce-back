@@ -4,9 +4,10 @@ A api for mini ecommerce with product creation, add to cart, add to fav, finaliz
 
 [x] Create db connection
 [x] Validate that the Product slug already exists before creating
-[] Manage products 
-[] Perma save to Cart
-[] Perma save to Fav
-[] check if product is in stock
+[x] Create random customer generator
+[x] Manage products [ create, update, delete]
+[x] Perma save and delete to Cart
+[x] Perma save and delete to Fav
+[] Buy products from cart
 [] Logic to manage stock after to sell
 [] send purchase confirmation email

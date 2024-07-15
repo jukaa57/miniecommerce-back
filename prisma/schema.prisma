@@ -18,7 +18,7 @@ model products {
   name         String
   description  String
   description2 String
-  value        Float
+  price        Float
   slug         String      @unique
   stock        Int
   image        String      @db.LongText()
@@ -30,10 +30,14 @@ model products {
 }
 
 model cart {
-  id        Int      @id @default(autoincrement())
-  product   products @relation(fields: [idProduct], references: [id], onDelete: Cascade)
-  idProduct String
-  quantity  Int
+  id          Int      @id @default(autoincrement())
+  product     products @relation(fields: [idProduct], references: [id], onDelete: Cascade)
+  idProduct   String
+  quantity    Int
+  priceUnity  Float
+  priceTotal  Float
+  customer    customers @relation(fields: [idCustomer], references: [id], onDelete: Cascade)
+  idCustomer  String
 
   add_at DateTime @default(now())
 }
@@ -42,6 +46,17 @@ model favorites {
   id        Int      @id @default(autoincrement())
   product   products @relation(fields: [idProduct], references: [id], onDelete: Cascade)
   idProduct String
+  customer   customers @relation(fields: [idCustomer], references: [id], onDelete: Cascade)
+  idCustomer String
 
   add_at DateTime @default(now())
+}
+
+model customers {
+  id            String      @id @default(cuid())
+  name          String     
+  email         String      @unique
+
+  cart          cart[]
+  favorites     favorites[]
 }
