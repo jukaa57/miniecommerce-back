@@ -54,6 +54,14 @@ export async function deleteProduct(slug: string) {
 }
 
 
+export async function getCart(idCustomer: string) {
+    const cart = await prisma.cart.findMany({
+        where: {
+            idCustomer: idCustomer
+        }
+    })
+    return cart
+}
 export async function addToCart(data: cart) {
     const product = await prisma.products.findFirst({
         where: {

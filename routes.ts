@@ -1,6 +1,6 @@
 import {app} from './server';
 import { createValidateCode, sendEmailSignUpValidation, validateEmail, validatePassword } from './shared/util';
-import { addToCart, addToFavorites, createCustomers, createProduct, deleteProduct, getAllProductsActive, removeToCart, removeToFavorites, slugExists, updateProduct } from './actions';
+import { addToCart, addToFavorites, createCustomers, createProduct, deleteProduct, getAllProductsActive, getCart, removeToCart, removeToFavorites, slugExists, updateProduct } from './actions';
 import { v4 as uuidv4 } from 'uuid';
 import { redisClient } from './shared/connections';
 import { cart, customers, favorites, products } from '@prisma/client'
@@ -62,8 +62,16 @@ export async function Routes() {
     })
 
 
+    app.get('/api/cart', async (req, res, next) => {
+        const {idCustomer} = req.body
+        const cart = await getCart(idCustomer)
+        res.send(cart);
+    })
     app.post('/api/cart', async (req, res, next) => {
         const data: cart = req.body
+        if(!data.quantity || !data.idCustomer) {
+            return res.status(500).send('Bad Request \n verify the information')
+        } 
         const action = await addToCart(data)
         if(action.error === null) 
         return res.status(200).send(action.message)
@@ -78,6 +86,7 @@ export async function Routes() {
 
         return res.status(500).send(action.message)
     })
+
 
     app.post('/api/confirm-purchase', async (req, res, next) => {
         const data: cart = req.body
